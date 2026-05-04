@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "timeago.js": "^4.0.2",
     "vue": "beta",
     "vue-router": "^5.0.4"
   },

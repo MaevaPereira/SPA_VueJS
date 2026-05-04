@@ -1,4 +1,5 @@
 <script setup>
+import { format } from 'timeago.js';
 /*
 import { reactive } from 'vue'
 const data = reactive({
@@ -27,7 +28,7 @@ const props = defineProps({
   <h1>{{ name }}</h1>
   <p>{{ weather }}</p>
   <p>{{ temperature }}°C</p>
-  <p>{{ updatedAt.toLocaleString()}}</p>
+  <p>{{ format(updatedAt.toLocaleString())}}</p>
 </template>
 
   <style scoped>
