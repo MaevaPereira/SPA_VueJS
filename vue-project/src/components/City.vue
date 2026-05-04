@@ -24,11 +24,11 @@ const props = defineProps({
     {{ data.temperature }}
     {{ data.updatedAt.toLocaleString()}}
 -->
-  {{ name }}
-  {{ weather }}
-  {{ temperature }}
-  {{ updatedAt.toLocaleString()}}
-  </template>
+  <h1>{{ name }}</h1>
+  <p>{{ weather }}</p>
+  <p>{{ temperature }}°C</p>
+  <p>{{ updatedAt.toLocaleString()}}</p>
+</template>
 
   <style scoped>
 

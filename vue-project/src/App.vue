@@ -4,6 +4,7 @@ import CitiesList from "./views/CitiesList.vue";
 const onListClick = () => {
   alert("test")
 }
+
 </script>
 
 <template>
