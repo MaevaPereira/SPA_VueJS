@@ -1,50 +1,67 @@
 <script setup>
 import City from "@/components/City.vue";
-import { reactive } from 'vue'
+import { reactive } from "vue";
+import { onMounted } from 'vue'
 
-const data= reactive({
-  cities: [
-    {
-      id: 1,
-      name: 'Ville 1',
-      weather: 'Ensoleillé',
-      temperature: 22.0,
-      updatedAt: new Date()
-    },
-    {
-      id: 2,
-      name: 'Ville 2',
-      weather: 'Peu nuageux',
-      temperature: 19.5,
-      updatedAt: new Date()
-    }
-  ]
+onMounted(() => {
+  data.loading = true
+
+  async function fetchAPI() {
+    try {
+      const reponse = await fetch(
+          "https://api.openweathermap.org/data/2.5/find?lat=45.758&lon=4.765&cnt=20&cluster=yes&lang=fr&units=metric&APPID=b00b9f704ff5692f8645ccde0e602fb9",
+      );
+      if (!reponse.ok) {
+        throw new Error(`Erreur HTTP : ${reponse.status}`);
+      }
+      const json = await reponse.json();
+      return json;
+    } catch (error) {
+      console.error(`Impossible d'obtenir les villes : ${error}`);
+      }
+  }
+
+  const jsonPromise = fetchAPI();
+    jsonPromise.then((json) => {
+      data.cities = json.list
+      data.loading = false
+      console.log(json.list[0])//voir les données pour data.cities (F12)
+    }).catch((error) => {
+      data.error = error
+      data.loading = false
+    })
 })
 
+const data = reactive({
+  cities: [],
+  loading: false,
+  error: null,
+})
 </script>
 
 <template>
-
   <div class="cities-list">
     <h1>Météo - Liste des villes</h1>
   </div>
 
- <div >
-   <City v-for="city in data.cities"
-    :key="city.id"
-    :name="city.name"
-    :weather="city.weather "
-    :temperature="city.temperature "
-    :updatedAt="city.updatedAt"
-  />
-
-    <!--<City />
-    <City name=" Ville test" weather="il fait moche" :temperature="20.55" :updatedAt="new Date()"  />
-    -->
+  <div v-if="data.loading=== true">
+    requête en cours
   </div>
 
+  <div v-else-if="data.error != null" style="color: red">
+    {{ data.error }}
+  </div>
+
+  <div v-else>
+    <City v-for="city in data.cities"
+          :key="city.id"
+          :name="city.name"
+          :weather="city.weather[0].description"
+          :temperature="city.main.temp"
+          :updatedAt="new Date(city.dt * 1000)"
+    />
+  </div>
 </template>
 
 <style scoped>
-
 </style>
