@@ -2,6 +2,7 @@
 import City from "@/components/City.vue";
 import { reactive } from "vue";
 import { onMounted } from 'vue'
+import CityMap from "../components/CityMap.vue";
 
 onMounted(() => {
   data.loading = true
@@ -61,6 +62,9 @@ const data = reactive({
           :updatedAt="new Date(city.dt * 1000)"
     />
   </div>
+  <city-map>
+
+  </city-map>
 </template>
 
 <style scoped>
