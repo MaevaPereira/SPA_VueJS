@@ -9,7 +9,7 @@ onMounted(() => {
   async function fetchAPI() {
     try {
       const reponse = await fetch(
-          "https://api.openweathermap.org/data/2.5/find?lat=45.758&lon=4.765&cnt=20&cluster=yes&lang=fr&units=metric&APPID=b00b9f704ff5692f8645ccde0e602fb9",
+          `https://api.openweathermap.org/data/2.5/find?lat=45.758&lon=4.765&cnt=20&cluster=yes&lang=fr&units=metric&APPID=${import.meta.env.VITE_API_KEY}`,
       );
       if (!reponse.ok) {
         throw new Error(`Erreur HTTP : ${reponse.status}`);
